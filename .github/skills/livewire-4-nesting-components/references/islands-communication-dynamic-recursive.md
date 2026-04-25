@@ -10,7 +10,7 @@ Use this reference only after a fresh Context7 lookup confirms the relevant Live
 - `@island(name: 'stats')` and `@island(name: 'chart')` document multiple independent UI regions in one component.
 - Islands share the parent component's lifecycle, state, and methods.
 - Use nested components when you need reusable, self-contained functionality.
-- Use nested components when the child needs separate lifecycle hooks such as `mount()` or `updated()`.
+- Use nested components when the child needs separate lifecycle hooks; confirm the exact hook names in the current Context7 result before citing them.
 - Use nested components when the child needs encapsulated state and logic, true independence across parent updates, or component-library boundaries.
 - The docs quick guide maps reusable components, separate lifecycle methods, and complex isolated state to nested components.
 - The docs quick guide maps performance optimization, deferred expensive content, and one-place usage to islands.
@@ -26,7 +26,7 @@ Use this reference only after a fresh Context7 lookup confirms the relevant Live
 
 ## Direct Parent Access
 - Livewire provides a magic `$parent` variable to the child Blade template.
-- `$parent` can access parent actions and properties directly from the child template.
+- `$parent` can call parent actions directly from the child template.
 - The docs show direct parent action syntax such as `wire:click="$parent.remove({{ $todo->id }})"`.
 - The docs describe event communication as an indirection that may or may not be desirable depending on the scenario.
 

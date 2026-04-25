@@ -7,12 +7,12 @@ argument-hint: 'Livewire 4 nested component task, parent-child props, keys, reac
 # Livewire 4 Nesting Components
 
 ## Purpose
-Use this skill to create, review, or explain Livewire 4 nested components using only details confirmed in the Livewire 4.x documentation from Context7.
+Use this skill to create, review, or explain Livewire 4 nested components, component islands, and parent-child communication using only details confirmed in the Livewire 4.x documentation from Context7.
 
 ## Source Rule
 1. Before giving final code or guidance, query Context7 for `/websites/livewire_laravel_4_x` with the exact Livewire 4 nesting topic.
 2. Do not add component syntax, prop behavior, key behavior, attributes, directives, event APIs, lifecycle claims, island guidance, or examples unless they appear in the retrieved documentation.
-3. If a requested nesting detail is not confirmed by the retrieved docs, say that the current documentation context did not confirm it and either run a narrower Context7 lookup or leave the topic out.
+3. If a requested nesting detail is not confirmed by the retrieved docs, say that the current documentation context did not confirm it and either run a narrower Context7 lookup using the query map or leave the topic out.
 4. Keep examples close to documented snippets and preserve documented tag names, attribute names, directive names, class names, attribute namespaces, method names, parameter names, and value strings.
 5. Do not infer behavior from Livewire 3, Laravel controllers, Alpine habits, package source code, or memory.
 
@@ -20,19 +20,19 @@ Use this skill to create, review, or explain Livewire 4 nested components using 
 - Context7 query shapes for refreshing source context: [context7-queries.md](./references/context7-queries.md)
 - Nested rendering, component extraction decisions, props, keys, and forced child re-rendering: [rendering-props-keys.md](./references/rendering-props-keys.md)
 - Reactive props, modelable child data, slots, named slots, and forwarded attributes: [reactive-modelable-slots-attributes.md](./references/reactive-modelable-slots-attributes.md)
-- Islands, parent-child communication, dynamic child components, and recursive components: [islands-communication-dynamic-recursive.md](./references/islands-communication-dynamic-recursive.md)
+- Islands, child-to-parent communication, direct parent access, dynamic child components, and recursive components: [islands-communication-dynamic-recursive.md](./references/islands-communication-dynamic-recursive.md)
 
 ## Workflow
-1. Identify the nesting concern: extraction decision, nested rendering, prop passing, loop keys, child refresh behavior, reactive props, modelable child state, slots, forwarded attributes, islands, parent-child communication, dynamic child components, recursive components, or performance tradeoff.
+1. Identify the nesting concern: extraction decision, nested rendering, prop passing, loop keys, forced child re-initialization, reactive props, modelable child state, slots, forwarded attributes, islands, child-to-parent communication, direct parent access, dynamic child components, recursive components, or performance tradeoff.
 2. Run a narrow Context7 query for the exact Livewire 4 nesting topic before producing code or review findings.
-3. Load the relevant reference file from the map above.
+3. Load the relevant reference file from the map above as a checklist only after the current Context7 result confirms the topic.
 4. For extraction decisions, confirm whether the content needs Livewire dynamic behavior or direct performance benefit; otherwise prefer the documented Blade component recommendation.
 5. For child rendering, use documented `<livewire:... />` syntax and account for the documented independence of nested components after the initial parent render.
 6. For props, choose documented dynamic, static, boolean, or shortened attribute syntax, and receive props through `mount()` or matching public properties when confirmed.
 7. For children rendered in loops, require a unique `:wire:key` and treat missing keys as a correctness issue.
 8. For child updates, choose between non-reactive default props, `#[Reactive]`, `#[Modelable]`, changing `wire:key`, or islands according to the documented scenario.
 9. For child content, use documented default slots, named slots, `$slots->has(...)`, and `$attributes` forwarding only when the lookup confirms the needed pattern.
-10. For parent-child communication, choose documented server dispatch, client-side `$dispatch`, or `$parent` direct access, and include the documented request-count/performance note when relevant.
+10. For parent-child communication, choose documented PHP dispatch with `#[On]`, client-side `$dispatch`, or `$parent` direct access, and include the documented request-count/performance note when relevant.
 11. For dynamic or recursive children, preserve documented dynamic component tags, required keys, and recursion termination warning.
 12. Finish by checking that every tag, prop syntax, directive, attribute, event helper, method, namespace, island directive, and caveat is traceable to the current Context7 result and the loaded reference file.
 
@@ -43,6 +43,7 @@ Use this skill to create, review, or explain Livewire 4 nested components using 
 - Keep props non-reactive by default; use `#[Reactive]` only when parent changes must update the child and the performance implications are acceptable.
 - Use `#[Modelable]` when a parent should bind `wire:model` directly to a child component property.
 - Change a child key only when the documented goal is to destroy and re-initialize that child component.
+- Use direct `$parent` access only when the parent-child relationship is clear and the documented direct-call syntax fits the task.
 
 ## Confirmed Core Patterns
 - A parent nests a Livewire child by placing the child tag in the parent Blade view, such as `<livewire:todos />`.
@@ -50,6 +51,7 @@ Use this skill to create, review, or explain Livewire 4 nested components using 
 - Dynamic props use a leading colon, static string props omit the colon, boolean true props may be passed by including only the key, and matching variable/prop names may use shortened syntax such as `:$todos`.
 - Child props can be received through `mount($todos)` or by omitting `mount()` when the public property and parameter names match.
 - Child components rendered in loops require unique keys; Livewire relies heavily on keys and will behave incorrectly without them.
+- Changing a child component key forces Livewire to create a new child instance, re-initialize it from scratch, and discard the old instance.
 - Props are not reactive by default; `#[Reactive]` on a child property opts that prop into updates when the parent passes a new value.
 - `#[Modelable]` on a child property lets the parent use `wire:model` on the child component; the docs state only one `#[Modelable]` attribute is currently supported and only the first one will be bound.
 - Slots pass Blade content from the parent to the child; named slots use `<livewire:slot name="actions">`, `$slots['actions']`, and `$slots->has('actions')`.
@@ -61,6 +63,7 @@ Use this skill to create, review, or explain Livewire 4 nested components using 
 
 ## Completion Check
 - A fresh Context7 lookup for `/websites/livewire_laravel_4_x` was used for the exact Nesting Components topic.
+- Reference files were used only after the fresh lookup confirmed the relevant topic.
 - The answer does not include APIs, syntax, event behavior, island behavior, lifecycle claims, or warnings absent from the retrieved Livewire 4.x docs.
 - All examples preserve documented Livewire 4 tag names, directive names, attribute names, event names, method signatures, namespace imports, and key patterns.
 - Loop-rendered children have unique keys, dynamic children have explicit keys, and forced re-render guidance uses changed keys only for documented re-initialization behavior.
